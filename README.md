@@ -1,3 +1,0 @@
-# SQLAnalyzer
-SQLAnalyzer
-
