@@ -6,10 +6,10 @@
 package com.sqlanalyzer;
 
 import com.sqlanalyzer.analyzer.Analyzer;
-import com.sqlanalyzer.database.Database;
-import com.sqlanalyzer.database.MSSQL;
-import com.sqlanalyzer.database.MySQL;
-import com.sqlanalyzer.database.PostgreSQL;
+import com.sqlanalyzer.database.service.DBService;
+import com.sqlanalyzer.database.service.MSSQLServiceImpl;
+import com.sqlanalyzer.database.service.MySQLServiceImpl;
+import com.sqlanalyzer.database.service.PostgreSQLServiceImpl;
 import com.sqlanalyzer.exception.SQLAnalyzerException;
 import com.sqlanalyzer.executionplans.DefaultSQLPlan;
 import com.sqlanalyzer.executionplans.SQLPlan;
@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class SQLAnalyzer {
 
-    private Database database;
+    private DBService dbService;
     private Configurator configurator;
     private static final DefaultConfigurator DEFAULT_CONFIGURATOR = new DefaultConfigurator();
     private Connection connection;
@@ -48,38 +48,38 @@ public class SQLAnalyzer {
 
     /**
      * Analyze ExecutionPlan or SQLQuery by using
-     * {@link MSSQL}, {@link MySQL}, {@link PostgreSQL}
+     * {@link MSSQLServiceImpl}, {@link MySQLServiceImpl}, {@link PostgreSQLServiceImpl}
      *
      * @author vicky.thakor
-     * @param database
+     * @param dbService
      * @param configurator
      */
-    public SQLAnalyzer(Class<? extends Database> database, Configurator configurator) {
+    public SQLAnalyzer(Class<? extends DBService> dbService, Configurator configurator) {
         try {
-            this.database = database.newInstance();
+            this.dbService = dbService.newInstance();
             if (configurator == null) {
                 this.configurator = DEFAULT_CONFIGURATOR;
             } else {
                 this.configurator = configurator;
             }
         } catch (Exception e) {
-            throw new SQLAnalyzerException(Constants.DATABASE_CONNECTOR_ERROR, e);
+            throw new SQLAnalyzerException(Constants.DBSERVICE_INITIALIZATION_ERROR, e);
         }
     }
 
     /**
-     * Prepare database {@link Connection} from given credentials in connector
-     * class.
+     * Prepare database {@link Connection} from given credentials in {@link DBService}
+     * class or you can provide your own connection object using {@link SQLAnalyzer#usingConnection(java.sql.Connection)}.
      *
      * @author vicky.thakor
      * @since 1.0
      * @return
      */
     public SQLAnalyzer initDatabaseConnection() {
-        if (database != null && database.DatabaseConnection() == null) {
+        if (dbService != null) {
             try {
-                Class.forName(database.DatabaseDriver());
-                connection = DriverManager.getConnection(database.DatabaseHost(), database.DatabaseUsername(), database.DatabasePassword());
+                Class.forName(dbService.DatabaseDriver());
+                connection = DriverManager.getConnection(dbService.DatabaseHost(), dbService.DatabaseUsername(), dbService.DatabasePassword());
             } catch (Exception e) {
                 throw new SQLAnalyzerException(Constants.CONNECTION_ERROR, e);
             }
@@ -88,9 +88,49 @@ public class SQLAnalyzer {
     }
 
     /**
+     * Either use {@link SQLAnalyzer#initDatabaseConnection()} when you want to initialize 
+     * connection object using credentials provided in {@link DBService} class  
+     * or use this method when you want to set Connection explicitly.
+     * @param connection 
+     */
+    public void usingConnection(Connection connection){
+        this.connection = connection;
+    }
+    
+    /**
+     * Use to initialize database service.<br/>
+     * Note: Use it only when you are not initializing it with constructor
+     * SQLAnalyzer(DBService, Configurator).
+     *
+     * @param dbService
+     */
+    public void usingDBService(Class<? extends DBService> dbService) {
+        try {
+            this.dbService = dbService.newInstance();
+        } catch (Exception e) {
+            throw new SQLAnalyzerException(Constants.DBSERVICE_INITIALIZATION_ERROR, e);
+        }
+    }
+
+    /**
+     * Use to initialize configurator.<br/>
+     * Note: Use it only when you are not initializing it with constructor
+     * SQLAnalyzer(DBService, Configurator).
+     * 
+     * @param configurator 
+     */
+    public void usingConfigurator(Configurator configurator) {
+        if (configurator == null) {
+            this.configurator = DEFAULT_CONFIGURATOR;
+        } else {
+            this.configurator = configurator;
+        }
+    }
+
+    /**
      * Generate report of given SQL Query.<br/>
-     * Note: Either provide your custom database {@link Connection} object in
-     * connector class or call {@link ExecutionPlan#prepareDatabaseConnection()}
+     * Note: Either provide your database {@link Connection} object using
+     * {@link SQLAnalyzer#usingConnection(java.sql.Connection)} or call {@link SQLAnalyzer#initDatabaseConnection()}
      * to get database {@link Connection} from your provided credentials.
      *
      * @author vicky.thakor
@@ -104,8 +144,8 @@ public class SQLAnalyzer {
     }
 
     /**
-     * Generate report from ExecutionPlan (MSSQL - XML, MySQL - JSON, PostgreSQL
-     * - JSON)
+     * Generate report from ExecutionPlan 
+     * (MSSQLServiceImpl - XML, MySQLServiceImpl - JSON, PostgreSQLServiceImpl - JSON)
      *
      * @author vicky.thakor
      * @param executionPlan
@@ -140,7 +180,7 @@ public class SQLAnalyzer {
      * @return
      */
     public List<SQLPlan> generateReport() {
-        analyzer = (Analyzer) database;
+        analyzer = (Analyzer) dbService;
         List<SQLPlan> sqlPlans = new ArrayList<SQLPlan>(0);
         if (executionPlan != null && !executionPlan.trim().isEmpty()) {
             SQLPlan sqlPlan = new DefaultSQLPlan();

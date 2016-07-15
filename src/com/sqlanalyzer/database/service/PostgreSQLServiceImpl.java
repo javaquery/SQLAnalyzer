@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sqlanalyzer.database;
+package com.sqlanalyzer.database.service;
 
 import com.sqlanalyzer.analyzer.PostgreSQLAnalyzer;
 
@@ -11,5 +11,5 @@ import com.sqlanalyzer.analyzer.PostgreSQLAnalyzer;
  * @author vicky.thako
  * @date 15th May, 2016
  */
-public abstract class PostgreSQL extends PostgreSQLAnalyzer implements Database{
+public abstract class PostgreSQLServiceImpl extends PostgreSQLAnalyzer implements DBService{
 }

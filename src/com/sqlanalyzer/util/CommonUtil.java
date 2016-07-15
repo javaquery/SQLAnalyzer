@@ -14,7 +14,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -105,18 +104,18 @@ public class CommonUtil {
         if (configurator.jQuerySource() == null || configurator.jQuerySource().trim().isEmpty()
                 || DefaultConfigurator.jQuerySource.equalsIgnoreCase(configurator.jQuerySource())) {
             commonUtil.createDirectory(folder + File.separatorChar + "js");
-            commonUtil.copyResourceFile("/com/javaquery/sqlanalyzer/files/jquery-1.8.2.min.js", folder + File.separatorChar + DefaultConfigurator.jQuerySource);
+            commonUtil.copyResourceFile("/com/sqlanalyzer/files/jquery-1.8.2.min.js", folder + File.separatorChar + DefaultConfigurator.jQuerySource);
         }
 
         if (configurator.jsPlumbSource() == null || configurator.jsPlumbSource().trim().isEmpty()
                 || DefaultConfigurator.jsPlumbSource.equalsIgnoreCase(configurator.jsPlumbSource())) {
             commonUtil.createDirectory(folder + File.separatorChar + "js");
-            commonUtil.copyResourceFile("/com/javaquery/sqlanalyzer/files/jquery.jsPlumb-1.3.3-all.js", folder + File.separatorChar + DefaultConfigurator.jsPlumbSource);
+            commonUtil.copyResourceFile("/com/sqlanalyzer/files/jquery.jsPlumb-1.3.3-all.js", folder + File.separatorChar + DefaultConfigurator.jsPlumbSource);
         }
 
         if (configurator.iconImage() == null || configurator.iconImage().trim().isEmpty()
                 || DefaultConfigurator.iconImage.equalsIgnoreCase(configurator.iconImage())) {
-            commonUtil.copyImage("/com/javaquery/sqlanalyzer/files/SQLAnalyzerIconImage.png", folder + File.separatorChar + DefaultConfigurator.iconImage);
+            commonUtil.copyImage("/com/sqlanalyzer/files/SQLAnalyzerIconImage.png", folder + File.separatorChar + DefaultConfigurator.iconImage);
         }
     }
 

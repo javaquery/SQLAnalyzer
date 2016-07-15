@@ -5,13 +5,12 @@
  */
 package com.sqlanalyzer.test;
 
-import com.sqlanalyzer.database.MySQL;
-import java.sql.Connection;
+import com.sqlanalyzer.database.service.MySQLServiceImpl;
 
 /**
  * @author vicky.thakor
  */
-public class MySQLApi extends MySQL{
+public class MySQLApi extends MySQLServiceImpl{
 
     @Override
     public String DatabaseDriver() {
@@ -31,10 +30,5 @@ public class MySQLApi extends MySQL{
     @Override
     public String DatabasePassword() {
         return "root";
-    }
-
-    @Override
-    public Connection DatabaseConnection() {
-        return null;
     }
 }

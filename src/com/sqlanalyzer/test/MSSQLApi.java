@@ -5,13 +5,12 @@
  */
 package com.sqlanalyzer.test;
 
-import com.sqlanalyzer.database.MSSQL;
-import java.sql.Connection;
+import com.sqlanalyzer.database.service.MSSQLServiceImpl;
 
 /**
  * @author vicky.thakor
  */
-public class MSSQLApi extends MSSQL{
+public class MSSQLApi extends MSSQLServiceImpl{
 
     @Override
     public String DatabaseDriver() {
@@ -32,10 +31,4 @@ public class MSSQLApi extends MSSQL{
     public String DatabasePassword() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
-    public Connection DatabaseConnection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
 }

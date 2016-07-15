@@ -5,13 +5,12 @@
  */
 package com.sqlanalyzer.test;
 
-import com.sqlanalyzer.database.PostgreSQL;
-import java.sql.Connection;
+import com.sqlanalyzer.database.service.PostgreSQLServiceImpl;
 
 /**
  * @author vicky.thakor
  */
-public class PostgreSQLApi extends PostgreSQL{
+public class PostgreSQLApi extends PostgreSQLServiceImpl{
 
    @Override
     public String DatabaseDriver() {
@@ -32,10 +31,4 @@ public class PostgreSQLApi extends PostgreSQL{
     public String DatabasePassword() {
         return "root";
     }
-
-    @Override
-    public Connection DatabaseConnection() {
-        return null;
-    }
-    
 }

@@ -7,6 +7,7 @@ package com.sqlanalyzer.test;
 
 import com.sqlanalyzer.SQLAnalyzer;
 import com.sqlanalyzer.executionplans.SQLPlan;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class Test {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 //        MSSQLSample();
         MySQLSample();
 //        PostgreSQLSample();
@@ -36,31 +37,36 @@ public class Test {
 
             for (SQLPlan sqlPlan : sQLPlans) {
                 System.out.println(sqlPlan.getHTMLReport());
+                Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public static void MySQLSample() {
+    public static void MySQLSample() throws IOException {
         List<SQLPlan> sQLPlans = new SQLAnalyzer(MySQLApi.class, null)
                 .initDatabaseConnection()
-                .fromQuery("select um.image_small from user_master um left join profile_master pm on um.uid = um.uid")
+                .fromQuery("select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email='vicky.thakor@javaquery.com'")
                 .save("D:\\SQLAnalyzer\\MySQL", "prefix", "suffix")
                 .generateReport();
+        
         for (SQLPlan sqlPlan : sQLPlans) {
             System.out.println(sqlPlan.getHTMLReport());
+            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
         }
     }
 
-    public static void PostgreSQLSample() {
+    public static void PostgreSQLSample() throws IOException {
         List<SQLPlan> sQLPlans = new SQLAnalyzer(PostgreSQLApi.class, null)
                 .initDatabaseConnection()
-                .fromQuery("select um.image_small from user_master um left join profile_master pm on um.uid = um.uid")
+                .fromQuery("select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email='vicky.thakor@javaquery.com'")
                 .save("D:\\SQLAnalyzer\\PostgreSQL", "prefix", "suffix")
                 .generateReport();
+        
         for (SQLPlan sqlPlan : sQLPlans) {
             System.out.println(sqlPlan.getHTMLReport());
+            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
         }
     }
 

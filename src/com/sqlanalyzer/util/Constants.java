@@ -11,7 +11,7 @@ package com.sqlanalyzer.util;
 public class Constants {
 
     public static final String INIT_DATABASE_CONNECTION = "Initialize database connection by calling 'initDatabaseConnection()' method";
-    public static final String DATABASE_CONNECTOR_ERROR = "Error creating DatabaseConnector object";
+    public static final String DBSERVICE_INITIALIZATION_ERROR = "Error creating DBService object";
     public static final String CONNECTION_ERROR = "Error occured to establish database connection";
     public static final String FETCH_EXECUTION_PLAN_ERROR = "Error occured while fetching execution plan";
     public static final String CONNECTION_CLOSE_ERROR = "Error closing database connection";

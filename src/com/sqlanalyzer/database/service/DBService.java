@@ -1,16 +1,14 @@
-package com.sqlanalyzer.database;
-
-import java.sql.Connection;
+package com.sqlanalyzer.database.service;
 
 /**
- * Database connection properties
+ * DBService connection properties
  * @author vicky.thakor
  */
-public interface Database {
+public interface DBService{
     /* Driver to connect datDatabaseConnectorabase. */
     public String DatabaseDriver();
     
-    /* Database host */
+    /* DBService host */
     public String DatabaseHost();
     
     /* Username for database connection */
@@ -18,7 +16,4 @@ public interface Database {
     
     /* Password for database connection */
     public String DatabasePassword();
-    
-    /* Provide your custom database connection object */
-    public Connection DatabaseConnection();
 }
