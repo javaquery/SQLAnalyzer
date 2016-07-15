@@ -174,7 +174,11 @@ public class SQLAnalyzer {
     }
 
     /**
-     * Get analyzed report.
+     * Get analyzed report of query executed on database. <br/> <br/>
+     * 
+     * <b>Note: Report can be generated only when same query previously executed on that database.
+     * In case of Analyzer can't find the execution plan. Execute same query multiple time so 
+     * database will cache the execution plan and then report can be generated.</b>
      *
      * @author vicky.thakor
      * @return
