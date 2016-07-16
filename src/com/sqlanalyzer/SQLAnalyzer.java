@@ -52,7 +52,7 @@ public class SQLAnalyzer {
      *
      * @author vicky.thakor
      * @param dbService
-     * @param configurator
+     * @param configurator In case you hosted javascript, stylesheet and images required by {@link SQLAnalyzer} 
      */
     public SQLAnalyzer(Class<? extends DBService> dbService, Configurator configurator) {
         try {
