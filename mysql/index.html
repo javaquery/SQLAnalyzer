@@ -1,0 +1,105 @@
+<html>
+  <head>
+      <title>prefixsuffix.html</title>      
+  <style>
+      .MySQLRowCount{position:absolute;top:-15px;right:0px;color:black;font-size:11px;}
+      .SQLAnalyzerGraphicalNode{font-size:13px;height:500px;max-height:500px;overflow:scroll;position:relative}
+      .MySQLConnectorDot{border-radius:10px;-webkit-border-radius:10px;-moz-border-radius:10px;box-shadow:0 0 8px rgba(0, 0, 0, .8);-webkit-box-shadow:0 0 8px rgba(0, 0, 0, .8);-moz-box-shadow:0 0 8px rgba(0, 0, 0, .8);margin:0px auto;margin-bottom:99px;width:10px;height:10px;}
+      .MySQLNestedLoop{margin:0px auto;margin-bottom:77px;border:2px solid gray;width:50px;height:50px;text-align:center;}
+      .MySQLTableBlock{display:inline-block;text-align:center;margin-right:70px}
+      .MySQLTableBlockData{color:white;padding:5px;border:1px solid black;width:140px;height:15px;text-align:center;position:relative;}
+      .MySQLGroupBy{margin:0px auto;border:2px solid brown;padding:7px;margin-bottom:60px;width:50px;}
+      .MySQLOrderBy{margin:0px auto;border:2px solid red;padding:7px;margin-bottom:60px;width:50px;}
+      .MySQLQueryBlock{margin:0px auto;border:1px solid black;padding:7px;margin-bottom:60px;width:70px;background-color:lightgray;}
+  </style>
+
+  <style>
+      body{margin:0;padding:0;width:100%;height:100%;overflow-x:hidden;background:rgb(224, 222, 222) !important;font-family:"Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif}
+      .SQLAnalyzerBodyContent{margin:5px 5px 10px 66px;}
+      .SQLAnalyzerSideBar{position:fixed;top:0px;left:0px;width:59px;height: 100%;text-align:center}
+      .SQLAnalyzerSmoothBlueBackground{background-color:#50b7dc !important;border-bottom:1px solid #2693ba;-webkit-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;-moz-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;}
+      .SQLAnalyzerH3 h3{margin-top:3px;margin-bottom:5px}
+      .SQLAnalyzerReportDate{position:fixed;top:2px;right:2px;font-size:12px;}
+      .SQLAnalyzerWhiteFadedBox{-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;-webkit-transition:opacity 0.218s;background-color:white;border:1px solid rgba(0, 0, 0, 0.2);cursor:default;outline:none;padding: 10px;}
+      .SQLAnalyzerSideBarIcon{width:32px;height:32px;margin:0px auto;margin-top:10px;cursor:pointer}
+      .SQLAnalyzerGraphicalDataIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -8px -97px}
+      .SQLAnalyzerQueryStatisticsIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -56px -97px}
+      .SQLAnalyzerInfoIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -104px -97px}
+      .SQLAnalyzerQueryStatisticsData{display:none}
+      .SQLAnalyzerInfoData{display:none}
+      .SQLAnalyzerOverflow{overflow:scroll}      #NodeProperties{width:250px;max-height:400px;overflow:scroll;z-index:1;margin-top:1px;display:none;position:absolute;top:0px;right:20px;background-color:rgb(255, 255, 161)}
+      .SQLAnalyzerNodeImage{margin:0px auto;cursor:pointer}
+      .SQLAnalyzerMarginBottom{margin-bottom:5px}      .SQLAnalyzerExternalLink{color:blue;text-decoration:none}      .SQLAnalyzerExternalLink:hover {text-decoration: underline !important;}      .SQLAnalyzerUILinks{list-style:none}      .SQLAnalyzerUILinks li {display:inline-block;margin-right:20px}  </style>
+
+  </head>
+  <body>
+      <div class = "SQLAnalyzerSideBar SQLAnalyzerSmoothBlueBackground">
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerGraphicalDataIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerQueryStatisticsIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerInfoIcon"></div>
+      </div>
+
+      <script src = "js/jquery-1.8.2.min.js"></script>
+      <script src = "js/jquery.jsPlumb-1.3.3-all.js"></script>
+  <script>
+       $(document).ready(function(){
+       $(".SQLAnalyzerNodeImage").live("click",function(){
+		$(this).each(function() {
+			var htmlContent = "<tr><td><a style=\"color:blue;text-decoration: underline;cursor: pointer;\" id=\"NodePropertiesCloseButton\">close</a></td></tr>";
+			var count = 0;
+			$.each(this.attributes, function() {
+				if(this.specified) {
+					if(this.name != "style" && this.name != "class" && this.name != "src" && this.name != "title" && this.name != "nodeid" && this.name != "id"){
+						if(count == 0){
+							htmlContent += "<tr>";
+						}else if(count == 1){
+							htmlContent += "</tr>";
+							count = 0;
+						}
+						htmlContent += "<td>" + this.value; + "</td>";
+						count = count + 1;
+					}
+				}
+			});
+			$("#NodeProperties").css("display","block");
+			$("#NodeProperties").html("<table style=\"width:100%;font-size: 13px;\">"+htmlContent+"</table>");
+		});
+	});
+	$("#NodePropertiesCloseButton").live("click",function(){
+		$("#NodeProperties").css("display","none");
+	});
+      $(".SQLAnalyzerGraphicalDataIcon").click(function(){
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerGraphicalData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerQueryStatisticsIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerInfoIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerInfoData").css("display", "block");
+      });
+   });
+   </script>
+
+      <div class = "SQLAnalyzerReportDate">Sat Jul 16 22:16:05 IST 2016</div>
+      <div class = "SQLAnalyzerBodyContent">
+          <div class = "SQLAnalyzerGraphicalData SQLAnalyzerH3">
+              <h3>Execution Plan - MYSQL</h3>
+              It is the graphical representation of query executed on database. Each node in it plays significant role in query. Click on node for more information.<br/><br/>
+              <div class="SQLAnalyzerReport"><div style="position:relative"><div id="NodeProperties"></div><div class="SQLAnalyzerGraphicalNode SQLAnalyzerWhiteFadedBox"><div class="MySQLTableBlock" id="MySQLTableBlock0"><div id="parent0" class="MySQLConnectorDot"></div><div id="child0" class="MySQLTableBlockData SQLAnalyzerNodeImage" style="background-color: rgb(26, 107, 215);" possible_keys =  "<b>possible_keys</b>: [PRIMARY,idxUnique_user_master_username,idxUnique_user_master_email]" ref =  "<b>ref</b>: [const]" filtered =  "<b>filtered</b>: 100" access_type =  "<b>access_type</b>: const" key_length =  "<b>key_length</b>: 302" table_name =  "<b>table_name</b>: this_" used_key_parts =  "<b>used_key_parts</b>: [email]" key =  "<b>key</b>: idxUnique_user_master_email" rows =  "<b>rows</b>: 1" ><div class="MySQLRowCount">1 row(s)</div>Single Row(Constant)</div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "child0",target: "parent0",anchors: ["TopCenter","BottomCenter"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script>this_<div style="font-size:11px;font-weight:bold">idxUnique_user_master_email</div></div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "parent0",target: "parent1",anchors: ["RightMiddle","LeftMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script><div class="MySQLTableBlock" id="MySQLTableBlock1"><div class="MySQLNestedLoop" id="parent1"><div style="height:7px"></div>nested loop</div><div id="child1" class="MySQLTableBlockData SQLAnalyzerNodeImage" style="background-color: green;" possible_keys =  "<b>possible_keys</b>: [fk_creditcard_user_master_idx]" ref =  "<b>ref</b>: [const]" filtered =  "<b>filtered</b>: 100" access_type =  "<b>access_type</b>: ref" key_length =  "<b>key_length</b>: 4" table_name =  "<b>table_name</b>: creditcard2_" used_key_parts =  "<b>used_key_parts</b>: [user_id]" key =  "<b>key</b>: fk_creditcard_user_master_idx" rows =  "<b>rows</b>: 1" ><div class="MySQLRowCount">1 row(s)</div>Non-Unique Key Lookup</div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "child1",target: "parent1",anchors: ["TopCenter","BottomCenter"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script>creditcard2_<div style="font-size:11px;font-weight:bold">fk_creditcard_user_master_idx</div></div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "parent1",target: "parent2",anchors: ["RightMiddle","LeftMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script><div class="MySQLTableBlock" id="MySQLTableBlock2"><div class="MySQLNestedLoop" id="parent2"><div style="height:7px"></div>nested loop</div><div id="child2" class="MySQLTableBlockData SQLAnalyzerNodeImage" style="background-color: green;" possible_keys =  "<b>possible_keys</b>: [fk_message_user_master_idx]" ref =  "<b>ref</b>: [const]" filtered =  "<b>filtered</b>: 100" access_type =  "<b>access_type</b>: ref" key_length =  "<b>key_length</b>: 4" table_name =  "<b>table_name</b>: messages1_" used_key_parts =  "<b>used_key_parts</b>: [user_id]" key =  "<b>key</b>: fk_message_user_master_idx" rows =  "<b>rows</b>: 2" ><div class="MySQLRowCount">2 row(s)</div>Non-Unique Key Lookup</div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "child2",target: "parent2",anchors: ["TopCenter","BottomCenter"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script>messages1_<div style="font-size:11px;font-weight:bold">fk_message_user_master_idx</div></div><script>jsPlumb.bind("ready", function() {jsPlumb.connect({source: "parent2",target: "parent3",anchors: ["TopCenter","BottomCenter"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script><script>$("#MySQLTableBlock2").prepend("<div id=\"MySQLTableBlock3\"><div class=\"MySQLQueryBlock\" id=\"parent3\">query_block</div></div>");</script></div></div></div>
+          </div>
+          <div class = "SQLAnalyzerQueryStatisticsData SQLAnalyzerH3">
+              <h3>Query Statistics</h3>
+              Executed Query<br/><br/>
+              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">              select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email='vicky.thakor@javaquery.com'
+              </div>                        </div>
+          <div class = "SQLAnalyzerInfoData SQLAnalyzerH3">              <h3>SQLAnalyzer</h3>              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">              <b>SQLAnalyzer</b>, an Open source SQL Query analysis library. Now don't just write SQL Query, understand the behind scene actions.<br/><br/>              <h3>Why SQLAnalyzer created?</h3>              <hr/>              Developer thinks having high processing hardware allows them to interact database with unstructured SQL Query. Well writing structured query is really a big deal.<br/><br/>              Now Developer can optimize the SQL Query in development phase using <b>SQLAnalyzer</b> and SQL Queries will give their best on Production environment. SQLAnalyzer can generate <b>Graphical Analysis</b> report of your SQL Query right from the CODE no extra configuration required on database.              <br/><br/>              <h3>Warning</h3>              <hr/>              SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete SQLAnalyzer code before you deploy your code on Production environment.              <br/><br/>              <h3>Note</h3>              <hr/>              <ul>              <li>Third party tool's rights reserved by their respective authors.</li>              <li>Files required to view this HTML report <b>1.)</b> SQLAnalyzerIconImage.png <b>2.)</b> jquery-1.8.2.min.js <b>3.)</b> jquery.jsPlumb-1.3.3-all.js</li>              <li>Icon Not Found, it represents that this particular operation not handled in SQLAnalyzer. Please report it on <a href ="mailto:vicky.thakor@javaquery.com" target="_blank" class = "SQLAnalyzerExternalLink">vicky.thakor@javaquery.com</a> with operation displayed under icon.</li>              </ul>              <div style = "text-align:center">              <ul class = "SQLAnalyzerUILinks">              <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.javaquery.com">www.javaquery.com</a></li>              <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.facebook.com/thejavaquery">facebook.com/thejavaquery</a></li>              <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.twitter.com/javaquery">twitter.com/javaquery</a></li>              <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://plus.google.com/+javaquery">plus.google.com/+javaquery</a></li>              <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://github.com/javaquery">github.com/javaquery</a></li>              </ul>              </div>              </div>          </div>
+      </div>
+
+  </body>
+</html>

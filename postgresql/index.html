@@ -1,0 +1,153 @@
+<html>
+  <head>
+      <title>prefixsuffix.html</title>      
+  <style>
+      .SQLAnalyzerGraphicalNode{height:500px;max-height:500px;overflow:scroll;white-space: nowrap;position:relative}
+      .PostgreSQLNode{padding-bottom:20px;display:inline-block;}
+      .PostgreSQLNodeChild{padding-bottom:20px;display:inline-block;padding-left:95px;}
+      .PostgreSQLTable{width:95px !important;height:95px !important;display:inline-block;vertical-align:top;text-align:center;font-size:12px;margin:0px auto}
+      .PostgreSQLFixedWidth{width:95px}
+      .PostgreSQLNodeIcon{position:relative;margin:0px auto;width:32px;height:32px;}
+      .PostgreSQLNodeName{width:95px;white-space:pre-wrap;}
+  </style>
+
+  <style>
+      body{margin:0;padding:0;width:100%;height:100%;overflow-x:hidden;background:rgb(224, 222, 222) !important;font-family:"Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif}
+      .SQLAnalyzerBodyContent{margin:5px 5px 10px 66px;}
+      .SQLAnalyzerSideBar{position:fixed;top:0px;left:0px;width:59px;height: 100%;text-align:center}
+      .SQLAnalyzerSmoothBlueBackground{background-color:#50b7dc !important;border-bottom:1px solid #2693ba;-webkit-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;-moz-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;}
+      .SQLAnalyzerH3 h3{margin-top:3px;margin-bottom:5px}
+      .SQLAnalyzerReportDate{position:fixed;top:2px;right:2px;font-size:12px;}
+      .SQLAnalyzerWhiteFadedBox{-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;-webkit-transition:opacity 0.218s;background-color:white;border:1px solid rgba(0, 0, 0, 0.2);cursor:default;outline:none;padding: 10px;}
+      .SQLAnalyzerSideBarIcon{width:32px;height:32px;margin:0px auto;margin-top:10px;cursor:pointer}
+      .SQLAnalyzerGraphicalDataIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -8px -97px}
+      .SQLAnalyzerQueryStatisticsIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -56px -97px}
+      .SQLAnalyzerInfoIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -104px -97px}
+      .SQLAnalyzerQueryStatisticsData{display:none}
+      .SQLAnalyzerInfoData{display:none}
+      .SQLAnalyzerOverflow{overflow:scroll}      #NodeProperties{width:250px;max-height:400px;overflow:scroll;z-index:1;margin-top:1px;display:none;position:absolute;top:0px;right:20px;background-color:rgb(255, 255, 161)}
+      .SQLAnalyzerNodeImage{margin:0px auto;cursor:pointer}
+      .SQLAnalyzerMarginBottom{margin-bottom:5px}      .SQLAnalyzerExternalLink{color:blue;text-decoration:none}      .SQLAnalyzerExternalLink:hover {text-decoration: underline !important;}      .SQLAnalyzerUILinks{list-style:none}      .SQLAnalyzerUILinks li {display:inline-block;margin-right:20px}  </style>
+
+  </head>
+  <body>
+      <div class = "SQLAnalyzerSideBar SQLAnalyzerSmoothBlueBackground">
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerGraphicalDataIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerQueryStatisticsIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerInfoIcon"></div>
+      </div>
+
+      <script src = "js/jquery-1.8.2.min.js"></script>
+      <script src = "js/jquery.jsPlumb-1.3.3-all.js"></script>
+  <script>
+       $(document).ready(function(){
+       $(".SQLAnalyzerNodeImage").live("click",function(){
+		$(this).each(function() {
+			var htmlContent = "<tr><td><a style=\"color:blue;text-decoration: underline;cursor: pointer;\" id=\"NodePropertiesCloseButton\">close</a></td></tr>";
+			var count = 0;
+			$.each(this.attributes, function() {
+				if(this.specified) {
+					if(this.name != "style" && this.name != "class" && this.name != "src" && this.name != "title" && this.name != "nodeid" && this.name != "id"){
+						if(count == 0){
+							htmlContent += "<tr>";
+						}else if(count == 1){
+							htmlContent += "</tr>";
+							count = 0;
+						}
+						htmlContent += "<td>" + this.value; + "</td>";
+						count = count + 1;
+					}
+				}
+			});
+			$("#NodeProperties").css("display","block");
+			$("#NodeProperties").html("<table style=\"width:100%;font-size: 13px;\">"+htmlContent+"</table>");
+		});
+	});
+	$("#NodePropertiesCloseButton").live("click",function(){
+		$("#NodeProperties").css("display","none");
+	});
+      $(".SQLAnalyzerGraphicalDataIcon").click(function(){
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerGraphicalData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerQueryStatisticsIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerInfoIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerInfoData").css("display", "block");
+      });
+   });
+   </script>
+
+      <div class = "SQLAnalyzerReportDate">Sat Jul 16 22:26:54 IST 2016</div>
+      <div class = "SQLAnalyzerBodyContent">
+          <div class = "SQLAnalyzerGraphicalData SQLAnalyzerH3">
+              <h3>Execution Plan - PostgreSQL</h3>
+              It is the graphical representation of query executed on database. Each node in it plays significant role in query. Click on node for more information.<br/><br/>
+              <div class="SQLAnalyzerReport">
+<div style="position:relative">
+<div id="NodeProperties"></div>
+<div id ="parent0" class = "SQLAnalyzerGraphicalNode SQLAnalyzerWhiteFadedBox"></div>
+<script>
+$("#parent0").append("<div id = \"parent1\" class = \"PostgreSQLNode\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent1\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -56px -185px\" title = \"Hash Join Inner Join\" Hash_Cond = \"<b>Hash Cond</b>: (creditcard2_.user_id = this_.id)\" Plan_Width = \"<b>Plan Width</b>: 892\" Join_Type = \"<b>Join Type</b>: Inner\" Plan_Rows = \"<b>Plan Rows</b>: 38\" Total_Cost = \"<b>Total Cost</b>: 74.24\" Startup_Cost = \"<b>Startup Cost</b>: 35.55\" Node_Type = \"<b>Node Type</b>: Hash Join\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">Hash Join Inner Join<br/></td></tr></table></div><br/>");
+$("#parent1").append("<div id = \"parent10\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent10\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -680px -185px\" title = \"creditcard\" Parent_Relationship = \"<b>Parent Relationship</b>: Outer\" Alias = \"<b>Alias</b>: creditcard2_\" Plan_Width = \"<b>Plan Width</b>: 24\" Relation_Name = \"<b>Relation Name</b>: creditcard\" Plan_Rows = \"<b>Plan Rows</b>: 1510\" Total_Cost = \"<b>Total Cost</b>: 25.1\" Startup_Cost = \"<b>Startup Cost</b>: 0.0\" Node_Type = \"<b>Node Type</b>: Seq Scan\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">creditcard<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent10",target: "PostgreSQLParent1",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+$("#parent1").append("<div id = \"parent101\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent101\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -536px -137px\" title = \"Hash\" Parent_Relationship = \"<b>Parent Relationship</b>: Inner\" Plan_Width = \"<b>Plan Width</b>: 868\" Plan_Rows = \"<b>Plan Rows</b>: 5\" Total_Cost = \"<b>Total Cost</b>: 35.49\" Startup_Cost = \"<b>Startup Cost</b>: 35.49\" Node_Type = \"<b>Node Type</b>: Hash\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">Hash<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent101",target: "PostgreSQLParent1",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+$("#parent101").append("<div id = \"parent1010\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent1010\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -56px -185px\" title = \"Hash Join Inner Join\" Hash_Cond = \"<b>Hash Cond</b>: (messages1_.user_id = this_.id)\" Parent_Relationship = \"<b>Parent Relationship</b>: Outer\" Plan_Width = \"<b>Plan Width</b>: 868\" Join_Type = \"<b>Join Type</b>: Inner\" Plan_Rows = \"<b>Plan Rows</b>: 5\" Total_Cost = \"<b>Total Cost</b>: 35.49\" Startup_Cost = \"<b>Startup Cost</b>: 11.14\" Node_Type = \"<b>Node Type</b>: Hash Join\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">Hash Join Inner Join<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent1010",target: "PostgreSQLParent101",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+$("#parent1010").append("<div id = \"parent10100\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent10100\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -680px -185px\" title = \"message\" Parent_Relationship = \"<b>Parent Relationship</b>: Outer\" Alias = \"<b>Alias</b>: messages1_\" Plan_Width = \"<b>Plan Width</b>: 48\" Relation_Name = \"<b>Relation Name</b>: message\" Plan_Rows = \"<b>Plan Rows</b>: 1040\" Total_Cost = \"<b>Total Cost</b>: 20.4\" Startup_Cost = \"<b>Startup Cost</b>: 0.0\" Node_Type = \"<b>Node Type</b>: Seq Scan\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">message<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent10100",target: "PostgreSQLParent1010",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+$("#parent1010").append("<div id = \"parent101001\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent101001\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -536px -137px\" title = \"Hash\" Parent_Relationship = \"<b>Parent Relationship</b>: Inner\" Plan_Width = \"<b>Plan Width</b>: 820\" Plan_Rows = \"<b>Plan Rows</b>: 1\" Total_Cost = \"<b>Total Cost</b>: 11.13\" Startup_Cost = \"<b>Startup Cost</b>: 11.13\" Node_Type = \"<b>Node Type</b>: Hash\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">Hash<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent101001",target: "PostgreSQLParent1010",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+$("#parent101001").append("<div id = \"parent1010010\" class = \"PostgreSQLNodeChild\"><table class = \"PostgreSQLTable\" id = \"PostgreSQLParent1010010\"><tr><td class = \"PostgreSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage PostgreSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -680px -185px\" title = \"user_master\" Parent_Relationship = \"<b>Parent Relationship</b>: Outer\" Filter = \"<b>Filter</b>: (email = 'vicky.thakor@javaquery.com'::bpchar)\" Alias = \"<b>Alias</b>: this_\" Plan_Width = \"<b>Plan Width</b>: 820\" Relation_Name = \"<b>Relation Name</b>: user_master\" Plan_Rows = \"<b>Plan Rows</b>: 1\" Total_Cost = \"<b>Total Cost</b>: 11.13\" Startup_Cost = \"<b>Startup Cost</b>: 0.0\" Node_Type = \"<b>Node Type</b>: Seq Scan\"  ></div></td></tr><tr><td class=\"PostgreSQLNodeName\">user_master<br/></td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "PostgreSQLParent1010010",target: "PostgreSQLParent101001",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});
+</script>
+</div>
+</div>
+
+          </div>
+          <div class = "SQLAnalyzerQueryStatisticsData SQLAnalyzerH3">
+              <h3>Query Statistics</h3>
+              Executed Query<br/><br/>
+              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">              select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email='vicky.thakor@javaquery.com'
+              </div>                        </div>
+          <div class = "SQLAnalyzerInfoData SQLAnalyzerH3">              <h3>SQLAnalyzer</h3>
+              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">
+              <b>SQLAnalyzer</b>, an Open source SQL Query analysis library. Now don't just write SQL Query, understand the behind scene actions.<br/><br/>
+              <h3>Why SQLAnalyzer created?</h3>
+              <hr/>
+              Developer thinks having high processing hardware allows them to interact database with unstructured SQL Query. Well writing structured query is really a big deal.<br/><br/>
+              Now Developer can optimize the SQL Query in development phase using <b>SQLAnalyzer</b> and SQL Queries will give their best on Production environment. SQLAnalyzer can generate <b>Graphical Analysis</b> report of your SQL Query right from the CODE no extra configuration required on database.
+              <br/><br/>
+              <h3>Warning</h3>
+              <hr/>
+              SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete SQLAnalyzer code before you deploy your code on Production environment.
+              <br/><br/>
+              <h3>Note</h3>
+              <hr/>
+              <ul>
+                  <li>Third party tool's rights reserved by their respective authors.</li>
+                  <li>Files required to view this HTML report <b>1.)</b> SQLAnalyzerIconImage.png <b>2.)</b> jquery-1.8.2.min.js <b>3.)</b> jquery.jsPlumb-1.3.3-all.js</li>
+                  <li>Icon Not Found, it represents that this particular operation not handled in SQLAnalyzer. Please report it on <a href ="mailto:vicky.thakor@javaquery.com" target="_blank" class = "SQLAnalyzerExternalLink">vicky.thakor@javaquery.com</a> with operation displayed under icon.</li>
+              </ul>
+              <div style = "text-align:center">
+                  <ul class = "SQLAnalyzerUILinks">
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.javaquery.com">www.javaquery.com</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.facebook.com/thejavaquery">facebook.com/thejavaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.twitter.com/javaquery">twitter.com/javaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://plus.google.com/+javaquery">plus.google.com/+javaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://github.com/javaquery">github.com/javaquery</a></li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+      </div>
+
+  </body>
+</html>
