@@ -35,10 +35,13 @@ public class Constants {
     public static final String CSS_REPORT_DATE = "SQLAnalyzerReportDate";
     public static final String CSS_WHITE_FADED_BOX = "SQLAnalyzerWhiteFadedBox";
     public static final String CSS_QUERY_STATISTICS_DATA = "SQLAnalyzerQueryStatisticsData";
+    public static final String CSS_REPORT_INFO_DATA = "SQLAnalyzerInfoData";
     public static final String CSS_H3 = "SQLAnalyzerH3";
     public static final String CSS_OVERFLOW = "SQLAnalyzerOverflow";
     public static final String CSS_MARGIN_BOTTOM = "SQLAnalyzerMarginBottom";
-
+    public static final String CSS_EXTERNAL_LINK = "SQLAnalyzerExternalLink";
+    public static final String CSS_UI_LINKS = "SQLAnalyzerUILinks";
+    
     public static final String HTML_ID_PARENT = "parent";
     public static final String HTML_ID_CHILD = "child";
     public static final String HTML_ID_NODE_PROPERTIES = "NodeProperties";

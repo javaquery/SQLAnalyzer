@@ -93,10 +93,17 @@ public class HTMLUtil {
         stringBuilder.append("      ").append("$(\".").append(Constants.CSS_ICON_GRAPHICAL_DATA).append("\").click(function(){\n");
         stringBuilder.append("          ").append("$(\".").append(Constants.CSS_QUERY_STATISTICS_DATA).append("\").css(\"display\", \"none\");\n");
         stringBuilder.append("          ").append("$(\".").append(Constants.CSS_GRAPHICAL_DATA).append("\").css(\"display\", \"block\");\n");
+        stringBuilder.append("          ").append("$(\".").append(Constants.CSS_REPORT_INFO_DATA).append("\").css(\"display\", \"none\");\n");
         stringBuilder.append("      ").append("});\n");
         stringBuilder.append("      ").append("$(\".").append(Constants.CSS_ICON_QUERY_STATISTICS).append("\").click(function(){\n");
         stringBuilder.append("          ").append("$(\".").append(Constants.CSS_GRAPHICAL_DATA).append("\").css(\"display\", \"none\");\n");
         stringBuilder.append("          ").append("$(\".").append(Constants.CSS_QUERY_STATISTICS_DATA).append("\").css(\"display\", \"block\");\n");
+        stringBuilder.append("          ").append("$(\".").append(Constants.CSS_REPORT_INFO_DATA).append("\").css(\"display\", \"none\");\n");
+        stringBuilder.append("      ").append("});\n");
+        stringBuilder.append("      ").append("$(\".").append(Constants.CSS_ICON_INFO).append("\").click(function(){\n");
+        stringBuilder.append("          ").append("$(\".").append(Constants.CSS_GRAPHICAL_DATA).append("\").css(\"display\", \"none\");\n");
+        stringBuilder.append("          ").append("$(\".").append(Constants.CSS_QUERY_STATISTICS_DATA).append("\").css(\"display\", \"none\");\n");
+        stringBuilder.append("          ").append("$(\".").append(Constants.CSS_REPORT_INFO_DATA).append("\").css(\"display\", \"block\");\n");
         stringBuilder.append("      ").append("});\n");
         stringBuilder.append("   });\n");
         stringBuilder.append("   </script>\n");
@@ -122,10 +129,15 @@ public class HTMLUtil {
         stringBuilder.append("      .").append(Constants.CSS_ICON_QUERY_STATISTICS).append("{background: url('").append(CSS_ICON_IMAGE).append("') no-repeat -56px -97px}\n");
         stringBuilder.append("      .").append(Constants.CSS_ICON_INFO).append("{background: url('").append(CSS_ICON_IMAGE).append("') no-repeat -104px -97px}\n");
         stringBuilder.append("      .").append(Constants.CSS_QUERY_STATISTICS_DATA).append("{display:none}\n");
+        stringBuilder.append("      .").append(Constants.CSS_REPORT_INFO_DATA).append("{display:none}\n");
         stringBuilder.append("      .").append(Constants.CSS_OVERFLOW).append("{overflow:scroll}");
         stringBuilder.append("      #").append(Constants.HTML_ID_NODE_PROPERTIES).append("{width:250px;max-height:400px;overflow:scroll;z-index:1;margin-top:1px;display:none;position:absolute;top:0px;right:20px;background-color:rgb(255, 255, 161)}\n");
         stringBuilder.append("      .").append(Constants.CSS_NODE_IMAGE).append("{margin:0px auto;cursor:pointer}\n");
         stringBuilder.append("      .").append(Constants.CSS_MARGIN_BOTTOM).append("{margin-bottom:5px}");
+        stringBuilder.append("      .").append(Constants.CSS_EXTERNAL_LINK).append("{color:blue;text-decoration:none}");
+        stringBuilder.append("      .").append(Constants.CSS_EXTERNAL_LINK).append(":hover {text-decoration: underline !important;}");
+        stringBuilder.append("      .").append(Constants.CSS_UI_LINKS).append("{list-style:none}");
+        stringBuilder.append("      .").append(Constants.CSS_UI_LINKS).append(" li {display:inline-block;margin-right:20px}");
         stringBuilder.append("  </style>\n");
         return stringBuilder.toString();
     }
@@ -165,6 +177,9 @@ public class HTMLUtil {
         stringBuilder.append("              ").append(properties.get(QUERY)).append("\n");
         stringBuilder.append("              ").append("</div>");
         stringBuilder.append("              ").append(console(properties.get(METADATA)));
+        stringBuilder.append("          ").append("</div>\n");
+        stringBuilder.append("          ").append("<div class = \"").append(Constants.CSS_REPORT_INFO_DATA).append(" ").append(Constants.CSS_H3).append("\">");
+        stringBuilder.append(reportInformation());
         stringBuilder.append("          ").append("</div>\n");
         stringBuilder.append("      ").append("</div>\n");
         return stringBuilder.toString();
@@ -219,5 +234,39 @@ public class HTMLUtil {
             return string;
         }
         return "";
+    }
+    
+    private static String reportInformation(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("              ").append("<h3>SQLAnalyzer</h3>\n");
+        stringBuilder.append("              ").append("<div class = \"").append(Constants.CSS_WHITE_FADED_BOX).append(" ").append(Constants.CSS_OVERFLOW).append("\">\n");
+        stringBuilder.append("              ").append("<b>SQLAnalyzer</b>, an Open source SQL Query analysis library. Now don't just write SQL Query, understand the behind scene actions.<br/><br/>\n");
+        stringBuilder.append("              ").append("<h3>Why SQLAnalyzer created?</h3>\n");
+        stringBuilder.append("              ").append("<hr/>\n");
+        stringBuilder.append("              ").append("Developer thinks having high processing hardware allows them to interact database with unstructured SQL Query. Well writing structured query is really a big deal.<br/><br/>\n");
+        stringBuilder.append("              ").append("Now Developer can optimize the SQL Query in development phase using <b>SQLAnalyzer</b> and SQL Queries will give their best on Production environment. SQLAnalyzer can generate <b>Graphical Analysis</b> report of your SQL Query right from the CODE no extra configuration required on database.\n");
+        stringBuilder.append("              ").append("<br/><br/>\n");
+        stringBuilder.append("              ").append("<h3>Warning</h3>\n");
+        stringBuilder.append("              ").append("<hr/>\n");
+        stringBuilder.append("              ").append("SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete SQLAnalyzer code before you deploy your code on Production environment.\n");
+        stringBuilder.append("              ").append("<br/><br/>\n");
+        stringBuilder.append("              ").append("<h3>Note</h3>\n");
+        stringBuilder.append("              ").append("<hr/>\n");
+        stringBuilder.append("              ").append("<ul>\n");
+        stringBuilder.append("                  ").append("<li>Third party tool's rights reserved by their respective authors.</li>\n");
+        stringBuilder.append("                  ").append("<li>Files required to view this HTML report <b>1.)</b> SQLAnalyzerIconImage.png <b>2.)</b> jquery-1.8.2.min.js <b>3.)</b> jquery.jsPlumb-1.3.3-all.js</li>\n");
+        stringBuilder.append("                  ").append("<li>Icon Not Found, it represents that this particular operation not handled in SQLAnalyzer. Please report it on <a href =\"mailto:vicky.thakor@javaquery.com\" target=\"_blank\" class = \"").append(Constants.CSS_EXTERNAL_LINK).append("\">vicky.thakor@javaquery.com</a> with operation displayed under icon.</li>\n");
+        stringBuilder.append("              ").append("</ul>\n");
+        stringBuilder.append("              ").append("<div style = \"text-align:center\">\n");
+        stringBuilder.append("                  ").append("<ul class = \"").append(Constants.CSS_UI_LINKS).append("\">\n");
+        stringBuilder.append("                      ").append("<li>").append("<a class =\"").append(Constants.CSS_EXTERNAL_LINK).append("\" target = \"_blank\" href = \"http://www.javaquery.com\">").append("www.javaquery.com").append("</a></li>\n");
+        stringBuilder.append("                      ").append("<li>").append("<a class =\"").append(Constants.CSS_EXTERNAL_LINK).append("\" target = \"_blank\" href = \"http://www.facebook.com/thejavaquery\">").append("facebook.com/thejavaquery").append("</a></li>\n");
+        stringBuilder.append("                      ").append("<li>").append("<a class =\"").append(Constants.CSS_EXTERNAL_LINK).append("\" target = \"_blank\" href = \"http://www.twitter.com/javaquery\">").append("twitter.com/javaquery").append("</a></li>\n");
+        stringBuilder.append("                      ").append("<li>").append("<a class =\"").append(Constants.CSS_EXTERNAL_LINK).append("\" target = \"_blank\" href = \"http://plus.google.com/+javaquery\">").append("plus.google.com/+javaquery").append("</a></li>\n");
+        stringBuilder.append("                      ").append("<li>").append("<a class =\"").append(Constants.CSS_EXTERNAL_LINK).append("\" target = \"_blank\" href = \"http://github.com/javaquery\">").append("github.com/javaquery").append("</a></li>\n");
+        stringBuilder.append("                  ").append("</ul>\n");
+        stringBuilder.append("              ").append("</div>\n");
+        stringBuilder.append("              ").append("</div>\n");
+        return stringBuilder.toString();
     }
 }
