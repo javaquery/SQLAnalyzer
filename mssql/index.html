@@ -1,7 +1,145 @@
 <html>
-	<head>
-	</head>
-	<body>
-		<center><h3>Under Construction</h3></center>
-	</body>
+  <head>
+      <title>MSSQL Sample Report</title>      
+  <style>
+      .SQLAnalyzerGraphicalNode{height:500px;max-height:500px;overflow:scroll;white-space:nowrap;position:relative}
+      .MSSQLNode{display:inline-block;vertical-align:top;text-align:center}
+      .MSSQLNodeWarningIcon{position:absolute;bottom:0px;right:0px;width:16px;height:16px;}
+      .MSSQLNodeIcon{position:relative;margin:0px auto;width:32px;height:32px;}
+      .MSSQLFixedWidth{width:95px}
+      .MSSQLNodeName{width:95px;white-space:pre-wrap;}
+      .MSSQLNodeChild{padding-bottom:20px;display:inline-block;padding-left:95px;}
+      .MSSQLTable{width:95px !important;height: 95px !important;display:inline-block;vertical-align:top;text-align:center;font-size:12px;margin:0px auto}  </style>
+
+  <style>
+      body{margin:0;padding:0;width:100%;height:100%;overflow-x:hidden;background:rgb(224, 222, 222) !important;font-family:"Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif}
+      .SQLAnalyzerBodyContent{margin:5px 5px 10px 66px;}
+      .SQLAnalyzerSideBar{position:fixed;top:0px;left:0px;width:59px;height: 100%;text-align:center}
+      .SQLAnalyzerSmoothBlueBackground{background-color:#50b7dc !important;border-bottom:1px solid #2693ba;-webkit-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;-moz-box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;box-shadow:rgba(0,0,0,0.3) 0px 2px 2px -1px;}
+      .SQLAnalyzerH3 h3{margin-top:3px;margin-bottom:5px}
+      .SQLAnalyzerReportDate{position:fixed;top:2px;right:2px;font-size:12px;}
+      .SQLAnalyzerWhiteFadedBox{-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;box-shadow:rgba(0, 0, 0, 0.2) 0px 2px 4px;-webkit-transition:opacity 0.218s;background-color:white;border:1px solid rgba(0, 0, 0, 0.2);cursor:default;outline:none;padding: 10px;}
+      .SQLAnalyzerSideBarIcon{width:32px;height:32px;margin:0px auto;margin-top:10px;cursor:pointer}
+      .SQLAnalyzerGraphicalDataIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -8px -97px}
+      .SQLAnalyzerQueryStatisticsIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -56px -97px}
+      .SQLAnalyzerInfoIcon{background: url('SQLAnalyzerIconImage.png') no-repeat -104px -97px}
+      .SQLAnalyzerQueryStatisticsData{display:none}
+      .SQLAnalyzerInfoData{display:none}
+      .SQLAnalyzerOverflow{overflow:scroll}      #NodeProperties{width:250px;max-height:400px;overflow:scroll;z-index:1;margin-top:1px;display:none;position:absolute;top:0px;right:20px;background-color:rgb(255, 255, 161)}
+      .SQLAnalyzerNodeImage{margin:0px auto;cursor:pointer}
+      .SQLAnalyzerMarginBottom{margin-bottom:5px}      .SQLAnalyzerExternalLink{color:blue;text-decoration:none}      .SQLAnalyzerExternalLink:hover {text-decoration: underline !important;}      .SQLAnalyzerUILinks{list-style:none}      .SQLAnalyzerUILinks li {display:inline-block;margin-right:20px}  </style>
+
+  </head>
+  <body>
+      <div class = "SQLAnalyzerSideBar SQLAnalyzerSmoothBlueBackground">
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerGraphicalDataIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerQueryStatisticsIcon"></div>
+          <div class = "SQLAnalyzerSideBarIcon SQLAnalyzerInfoIcon"></div>
+      </div>
+
+      <script src = "js/jquery-1.8.2.min.js"></script>
+      <script src = "js/jquery.jsPlumb-1.3.3-all.js"></script>
+  <script>
+       $(document).ready(function(){
+       $(".SQLAnalyzerNodeImage").live("click",function(){
+		$(this).each(function() {
+			var htmlContent = "<tr><td><a style=\"color:blue;text-decoration: underline;cursor: pointer;\" id=\"NodePropertiesCloseButton\">close</a></td></tr>";
+			var count = 0;
+			$.each(this.attributes, function() {
+				if(this.specified) {
+					if(this.name != "style" && this.name != "class" && this.name != "src" && this.name != "title" && this.name != "nodeid" && this.name != "id"){
+						if(count == 0){
+							htmlContent += "<tr>";
+						}else if(count == 1){
+							htmlContent += "</tr>";
+							count = 0;
+						}
+						htmlContent += "<td>" + this.value; + "</td>";
+						count = count + 1;
+					}
+				}
+			});
+			$("#NodeProperties").css("display","block");
+			$("#NodeProperties").html("<table style=\"width:100%;font-size: 13px;\">"+htmlContent+"</table>");
+		});
+	});
+	$("#NodePropertiesCloseButton").live("click",function(){
+		$("#NodeProperties").css("display","none");
+	});
+      $(".SQLAnalyzerGraphicalDataIcon").click(function(){
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerGraphicalData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerQueryStatisticsIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "block");
+          $(".SQLAnalyzerInfoData").css("display", "none");
+      });
+      $(".SQLAnalyzerInfoIcon").click(function(){
+          $(".SQLAnalyzerGraphicalData").css("display", "none");
+          $(".SQLAnalyzerQueryStatisticsData").css("display", "none");
+          $(".SQLAnalyzerInfoData").css("display", "block");
+      });
+   });
+   </script>
+
+      <div class = "SQLAnalyzerReportDate">Sun Jul 17 21:03:43 IST 2016</div>
+      <div class = "SQLAnalyzerBodyContent">
+          <div class = "SQLAnalyzerGraphicalData SQLAnalyzerH3">
+              <h3>Execution Plan - Microsoft SQL Server</h3>
+              It is the graphical representation of query executed on database. Each node in it plays significant role in query. Click on node for more information.<br/><br/>
+              <div class="SQLAnalyzerReport"><div style="position:relative"><div id="NodeProperties"></div><div id = "parent-1" class = "SQLAnalyzerGraphicalNode SQLAnalyzerWhiteFadedBox"><div class = "MSSQLNode"><table class = "MSSQLTable" id = "MSSQLRootNode"><tr><td class = "MSSQLFixedWidth"><div class  = "SQLAnalyzerNodeImage MSSQLNodeIcon" style = "background: url('SQLAnalyzerIconImage.png') no-repeat -680px -8px" title = "Select"  ></div></td></tr><tr><td class="MSSQLNodeName">Select<br/>0.0 %</td></tr></table></div></div>
+<script>
+$("#parent-1").append("<div id = \"parent0\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable0\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -344px -8px\" title = \"Hash Match<br/>(Inner Join)\" PhysicalOp = \"<b>PhysicalOp</b>: Hash Match\" LogicalOp = \"<b>LogicalOp</b>: Inner Join\" EstimateIO = \"<b>EstimateIO</b>: 0\" EstimateCPU = \"<b>EstimateCPU</b>: 0.0177709\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.030915\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 4.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 0\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 0.0177709\" HashKeysBuild,HashKeysProbe = \"<b>HashKeysBuild,HashKeysProbe</b>: \" Alias = \"<b>Alias</b>: [creditcard2_], [messages1_]\" Column = \"<b>Column</b>: user_id, user_id\" Database = \"<b>Database</b>: [sqlanalyzer], [sqlanalyzer]\" Schema = \"<b>Schema</b>: [dbo], [dbo]\" Table = \"<b>Table</b>: [creditcard], [message]\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">Hash Match<br/>(Inner Join)<br/>57.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable0",target: "MSSQLRootNode",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent0").append("<div id = \"parent1\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable1\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -8px -8px\" title = \"creditcard<br/>Clustered Index Scan\" PhysicalOp = \"<b>PhysicalOp</b>: Clustered Index Scan\" LogicalOp = \"<b>LogicalOp</b>: Clustered Index Scan\" EstimateIO = \"<b>EstimateIO</b>: 0.003125\" EstimateCPU = \"<b>EstimateCPU</b>: 0.0001581\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.0032831\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 0.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 1\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 0.0032831\" ForcedIndex = \"<b>ForcedIndex</b>: 0\" NoExpandHint = \"<b>NoExpandHint</b>: 0\" Ordered = \"<b>Ordered</b>: 0\" Alias = \"<b>Alias</b>: [creditcard2_]\" Database = \"<b>Database</b>: [sqlanalyzer]\" Index = \"<b>Index</b>: [PK_creditcard]\" IndexKind = \"<b>IndexKind</b>: Clustered\" Schema = \"<b>Schema</b>: [dbo]\" Table = \"<b>Table</b>: [creditcard]\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">creditcard<br/>Clustered Index Scan<br/>11.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable1",target: "MSSQLTable0",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent0").append("<div id = \"parent2\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable2\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -488px -8px\" title = \"Nested Loops<br/>(Inner Join)\" PhysicalOp = \"<b>PhysicalOp</b>: Nested Loops\" LogicalOp = \"<b>LogicalOp</b>: Inner Join\" EstimateIO = \"<b>EstimateIO</b>: 0\" EstimateCPU = \"<b>EstimateCPU</b>: 4.18e-006\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.00985796\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 4.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 2\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 4.18E-6\" Predicate/ProbeResidual = \"<b>Predicate/ProbeResidual</b>: [sqlanalyzer].[dbo].[user_master].[id] as [this_].[id]=[sqlanalyzer].[dbo].[message].[user_id] as [messages1_].[user_id]\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">Nested Loops<br/>(Inner Join)<br/>0.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable2",target: "MSSQLTable0",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent2").append("<div id = \"parent3\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable3\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -488px -8px\" title = \"Nested Loops<br/>(Inner Join)\" PhysicalOp = \"<b>PhysicalOp</b>: Nested Loops\" LogicalOp = \"<b>LogicalOp</b>: Inner Join\" EstimateIO = \"<b>EstimateIO</b>: 0\" EstimateCPU = \"<b>EstimateCPU</b>: 4.18e-006\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.00657038\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 0.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 3\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 4.18E-6\" Column = \"<b>Column</b>: Bmk1000\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">Nested Loops<br/>(Inner Join)<br/>0.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable3",target: "MSSQLTable2",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent2").append("<div id = \"parent14\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable14\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -8px -8px\" title = \"message<br/>Clustered Index Scan\" PhysicalOp = \"<b>PhysicalOp</b>: Clustered Index Scan\" LogicalOp = \"<b>LogicalOp</b>: Clustered Index Scan\" EstimateIO = \"<b>EstimateIO</b>: 0.003125\" EstimateCPU = \"<b>EstimateCPU</b>: 0.0001581\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.0032831\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 4.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 14\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 0.0032831\" ForcedIndex = \"<b>ForcedIndex</b>: 0\" NoExpandHint = \"<b>NoExpandHint</b>: 0\" Ordered = \"<b>Ordered</b>: 0\" Alias = \"<b>Alias</b>: [messages1_]\" Database = \"<b>Database</b>: [sqlanalyzer]\" Index = \"<b>Index</b>: [PK_message]\" IndexKind = \"<b>IndexKind</b>: Clustered\" Schema = \"<b>Schema</b>: [dbo]\" Table = \"<b>Table</b>: [message]\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">message<br/>Clustered Index Scan<br/>11.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable14",target: "MSSQLTable2",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent3").append("<div id = \"parent4\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable4\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -392px -8px\" title = \"user_master<br/>Index Seek\" PhysicalOp = \"<b>PhysicalOp</b>: Index Seek\" LogicalOp = \"<b>LogicalOp</b>: Index Seek\" EstimateIO = \"<b>EstimateIO</b>: 0.003125\" EstimateCPU = \"<b>EstimateCPU</b>: 0.0001581\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.0032831\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 0.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 4\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 0.0032831\" ForceSeek = \"<b>ForceSeek</b>: 0\" ForcedIndex = \"<b>ForcedIndex</b>: 0\" NoExpandHint = \"<b>NoExpandHint</b>: 0\" Ordered = \"<b>Ordered</b>: 1\" ScanDirection = \"<b>ScanDirection</b>: FORWARD\" Alias = \"<b>Alias</b>: [this_]\" Database = \"<b>Database</b>: [sqlanalyzer]\" Index = \"<b>Index</b>: [idxUnique_user_master_email]\" IndexKind = \"<b>IndexKind</b>: NonClustered\" Schema = \"<b>Schema</b>: [dbo]\" Table = \"<b>Table</b>: [user_master]\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">user_master<br/>Index Seek<br/>11.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable4",target: "MSSQLTable3",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});$("#parent3").append("<div id = \"parent6\" class = \"MSSQLNodeChild\"><table class = \"MSSQLTable\" id = \"MSSQLTable6\"><tr><td class = \"MSSQLFixedWidth\"><div class  = \"SQLAnalyzerNodeImage MSSQLNodeIcon\" style = \"background: url('SQLAnalyzerIconImage.png') no-repeat -584px -8px\" title = \"RID Lookup\" PhysicalOp = \"<b>PhysicalOp</b>: RID Lookup\" LogicalOp = \"<b>LogicalOp</b>: RID Lookup\" EstimateIO = \"<b>EstimateIO</b>: 0.003125\" EstimateCPU = \"<b>EstimateCPU</b>: 0.0001581\" EstimatedTotalSubtreeCost = \"<b>EstimatedTotalSubtreeCost</b>: 0.0032831\" EstimateRows = \"<b>EstimateRows</b>: 1\" AvgRowSize = \"<b>AvgRowSize</b>: 0.0KB\" EstimateRebinds = \"<b>EstimateRebinds</b>: 0\" EstimateRewinds = \"<b>EstimateRewinds</b>: 0\" NodeId = \"<b>NodeId</b>: 6\" Parallel = \"<b>Parallel</b>: 0\" EstimateOperatorCost = \"<b>EstimateOperatorCost</b>: 0.0032831\" ForceSeek = \"<b>ForceSeek</b>: 0\" ForcedIndex = \"<b>ForcedIndex</b>: 0\" Lookup = \"<b>Lookup</b>: 1\" NoExpandHint = \"<b>NoExpandHint</b>: 0\" Ordered = \"<b>Ordered</b>: 1\" ScanDirection = \"<b>ScanDirection</b>: FORWARD\" Alias = \"<b>Alias</b>: [this_]\" Database = \"<b>Database</b>: [sqlanalyzer]\" IndexKind = \"<b>IndexKind</b>: Heap\" Schema = \"<b>Schema</b>: [dbo]\" Table = \"<b>Table</b>: [user_master]\" TableReferenceId = \"<b>TableReferenceId</b>: -1\"  ></div></td></tr><tr><td class=\"MSSQLNodeName\">RID Lookup<br/>11.0 %</td></tr></table></div><br/>");
+jsPlumb.bind("ready", function() {jsPlumb.connect({source: "MSSQLTable6",target: "MSSQLTable3",anchors: ["LeftMiddle","RightMiddle"],endpoint: ["Dot", {radius: 1}],endpointStyle: {fillStyle: "#5b9ada"},setDragAllowedWhenFull: true,paintStyle: {strokeStyle: "#5b9ada",lineWidth: 3},connector: ["Straight"],connectorStyle: {lineWidth: 3,strokeStyle: "#5b9ada"},overlays: [["Arrow", {width: 10,length: 10,foldback: 1,location: 1,id: "arrow"}]]});});</script>
+</div>
+</div>
+
+          </div>
+          <div class = "SQLAnalyzerQueryStatisticsData SQLAnalyzerH3">
+              <h3>Query Statistics</h3>
+              Executed Query<br/><br/>
+              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">              select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email = 'vicky.thakor@javaquery.com'
+              </div>              <br/><h3>Console</h3>
+<div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow"><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementSubTreeCost</b></div><div class = "SQLAnalyzerMarginBottom">0.030915</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementOptmEarlyAbortReason</b></div><div class = "SQLAnalyzerMarginBottom">GoodEnoughPlanFound</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementText</b></div><div class = "SQLAnalyzerMarginBottom">select * from user_master this_ inner join message messages1_ on this_.id=messages1_.user_id inner join creditcard creditcard2_ on this_.id=creditcard2_.user_id where this_.email = 'vicky.thakor@javaquery.com'</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>LAST_LOGICAL_READS</b></div><div class = "SQLAnalyzerMarginBottom">7</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>LAST_LOGICAL_WRITE</b></div><div class = "SQLAnalyzerMarginBottom">0</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementEstRows</b></div><div class = "SQLAnalyzerMarginBottom">1</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementOptmLevel</b></div><div class = "SQLAnalyzerMarginBottom">FULL</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>QueryPlanHash</b></div><div class = "SQLAnalyzerMarginBottom">0xC8157A4553F872A8</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>LAST_ELAPSED_TIME</b></div><div class = "SQLAnalyzerMarginBottom">1000</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>StatementType</b></div><div class = "SQLAnalyzerMarginBottom">SELECT</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>EXECUTION_COUNT</b></div><div class = "SQLAnalyzerMarginBottom">6</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>LAST_EXECUTION_TIME</b></div><div class = "SQLAnalyzerMarginBottom">2016-07-17 20:59:22.393</div></div><div class = "SQLAnalyzerMarginBottom"><div class = "SQLAnalyzerMarginBottom"><b>QueryHash</b></div><div class = "SQLAnalyzerMarginBottom">0x0F2C0A8B6DAD9246</div></div></div>          </div>
+          <div class = "SQLAnalyzerInfoData SQLAnalyzerH3">              <h3>SQLAnalyzer</h3>
+              <div class = "SQLAnalyzerWhiteFadedBox SQLAnalyzerOverflow">
+              <b>SQLAnalyzer</b>, an Open source SQL Query analysis library. Now don't just write SQL Query, understand the behind scene actions.<br/><br/>
+              <h3>Why SQLAnalyzer created?</h3>
+              <hr/>
+              Developer thinks having high processing hardware allows them to interact database with unstructured SQL Query. Well writing structured query is really a big deal.<br/><br/>
+              Now Developer can optimize the SQL Query in development phase using <b>SQLAnalyzer</b> and SQL Queries will give their best on Production environment. SQLAnalyzer can generate <b>Graphical Analysis</b> report of your SQL Query right from the CODE no extra configuration required on database.
+              <br/><br/>
+              <h3>Warning</h3>
+              <hr/>
+              SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete SQLAnalyzer code before you deploy your code on Production environment.
+              <br/><br/>
+              <h3>Note</h3>
+              <hr/>
+              <ul>
+                  <li>Third party tool's rights reserved by their respective authors.</li>
+                  <li>Files required to view this HTML report <b>1.)</b> SQLAnalyzerIconImage.png <b>2.)</b> jquery-1.8.2.min.js <b>3.)</b> jquery.jsPlumb-1.3.3-all.js</li>
+                  <li>Icon Not Found, it represents that this particular operation not handled in SQLAnalyzer. Please report it on <a href ="mailto:vicky.thakor@javaquery.com" target="_blank" class = "SQLAnalyzerExternalLink">vicky.thakor@javaquery.com</a> with operation displayed under icon.</li>
+              </ul>
+              <div style = "text-align:center">
+                  <ul class = "SQLAnalyzerUILinks">
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.javaquery.com">www.javaquery.com</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.facebook.com/thejavaquery">facebook.com/thejavaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://www.twitter.com/javaquery">twitter.com/javaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://plus.google.com/+javaquery">plus.google.com/+javaquery</a></li>
+                      <li><a class ="SQLAnalyzerExternalLink" target = "_blank" href = "http://github.com/javaquery">github.com/javaquery</a></li>
+                  </ul>
+              </div>
+              </div>
+          </div>
+      </div>
+
+  </body>
 </html>
