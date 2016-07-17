@@ -14,21 +14,21 @@ public class MSSQLApi extends MSSQLServiceImpl{
 
     @Override
     public String DatabaseDriver() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "net.sourceforge.jtds.jdbc.Driver";
     }
 
     @Override
     public String DatabaseHost() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "jdbc:jtds:sqlserver://localhost:1433/sqlanalyzer";
     }
 
     @Override
     public String DatabaseUsername() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "root";
     }
 
     @Override
     public String DatabasePassword() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "root";
     }
 }

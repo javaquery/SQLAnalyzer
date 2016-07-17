@@ -132,6 +132,7 @@ public class MSSQLAnalyzer implements Analyzer {
     public List<SQLPlan> getExecutionPlans(Connection connection, String sqlQuery) {
         List<SQLPlan> listExecutionPlans = new ArrayList<SQLPlan>(0);
         if (connection != null) {
+            sqlQuery = sqlQuery.replace("'", "''");
             sqlQuery = SQLUtil.replaceQuestionMarkWithP(sqlQuery);
             /**
              * Microsoft SQL Server can process String of 2000 character only in
@@ -162,8 +163,8 @@ public class MSSQLAnalyzer implements Analyzer {
                 ResultSet resultSetExecutionPlan = preparedStatement.executeQuery();
                 while (resultSetExecutionPlan.next()) {
                     Map<String, Object> meta = new HashMap<String, Object>(0);
-                    meta.put(MSSQLMetaType.SQL_TEXT.name(), resultSetExecutionPlan.getString(1));
-                    meta.put(MSSQLMetaType.QUERY_PLAN.name(), resultSetExecutionPlan.getString(2));
+//                    meta.put(MSSQLMetaType.SQL_TEXT.name(), resultSetExecutionPlan.getString(1));
+//                    meta.put(MSSQLMetaType.QUERY_PLAN.name(), resultSetExecutionPlan.getString(2));
                     meta.put(MSSQLMetaType.EXECUTION_COUNT.name(), resultSetExecutionPlan.getString(3));
                     meta.put(MSSQLMetaType.LAST_EXECUTION_TIME.name(), resultSetExecutionPlan.getString(4));
                     meta.put(MSSQLMetaType.LAST_ELAPSED_TIME.name(), resultSetExecutionPlan.getString(5));
