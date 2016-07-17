@@ -2,9 +2,9 @@
 <b>SQLAnalyzer</b>, an Open source SQL Query analysis library. Now don't just write SQL Query, understand the behind scene actions. 
 
 # Why SQLAnalyzer created?
-Developer thinks having high processing hardware allows them to query database with unstructured SQL Query. Well writing structured query is really a big deal. 
+Developer thinks having high processing hardware allows them to interact database with unstructured SQL Query. Well writing structured query is really a big deal.
 
-Now Developer can optimize the SQL Query on Local environment using <b>SQLAnalyzer</b> and SQL Queries will give their best on Production environment. SQLAnalyzer can generate <b>Graphical Analysis</b> report of your SQL Query right from the CODE no extra configuration required on database. 
+Now Developer can optimize the SQL Query in development phase using SQLAnalyzer and SQL Queries will give their best on Production environment. SQLAnalyzer can generate Graphical Analysis report of your SQL Query right from the CODE no extra configuration required on database. 
 
 #Features
 <table>
@@ -68,7 +68,7 @@ public class MySQLApi extends MySQLServiceImpl{
 </pre>
 
 #Source code (Step 2)
-Generate report from SQL Query.
+Generate report from SQL Query. [<b>Note</b>: Real query must be execcuted before preparing report.]
 <pre>
 public static void main(String[] args) throws IOException {
         List<SQLPlan> sQLPlans = new SQLAnalyzer(MySQLApi.class, null)
@@ -90,5 +90,14 @@ public static void main(String[] args) throws IOException {
 }
 </pre>
 
+#Sample Reports
+<a href="https://javaquery.github.io/SQLAnalyzer/">https://javaquery.github.io/SQLAnalyzer/</a>
+- <a href="http://javaquery.github.io/SQLAnalyzer/mssql">Microsoft SQL Server</a> 
+- <a href="http://javaquery.github.io/SQLAnalyzer/mysql">MySQL</a>
+- <a href="http://javaquery.github.io/SQLAnalyzer/postgresql">PostgreSQL</a>
+
+#Add-ons
+- <a href="https://github.com/javaquery/HibernateSQLAnalyzer">HibernateSQLAnalyzer</a> allows you to prepare analysis report directly from <a href="https://en.wikipedia.org/wiki/Hibernate_(framework)">Hibernate Criteria</a>
+
 #Warning
-SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete the code before deploy on Production environment.
+SQLAnalyzer is analysis tool and should be used at development phase. It'll cost a lot on Production environment so comment/delete SQLAnalyzer code before you deploy your code on Production environment. 
