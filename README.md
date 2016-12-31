@@ -85,7 +85,7 @@ public static void main(String[] args) throws IOException {
             String htmlReport = sqlPlan.getHTMLReport();
             
             /* Open report saved to Physical location. */
-            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
+            Desktop.getDesktop().open(sqlPlan.getReportFile());
         }
 }
 </pre>
