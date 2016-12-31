@@ -239,8 +239,9 @@ public class MySQLAnalyzer implements Analyzer {
                 String property = iteratorProperties.next();
                 /* Get value of key */
                 String propertyValue = objTableNode.optString(property);
+                propertyValue = propertyValue.replace("\"", "").replace("<", "").replace(">", "");
 
-                nodeAttribute.append(property).append(" = ").append(" \"<b>").append(property).append("</b>: ").append(propertyValue.replace("\"", "")).append("\"").append(" ");
+                nodeAttribute.append(property).append(" = ").append(" \"<b>").append(property).append("</b>: ").append(propertyValue).append("\"").append(" ");
 
                 if ("rows".equalsIgnoreCase(property) && propertyValue.matches("[0-9]*")) {
                     rowCount = Integer.valueOf(propertyValue);
@@ -292,12 +293,15 @@ public class MySQLAnalyzer implements Analyzer {
             stringBuilder.append("</script>");
 
             if (objTableNode.has(MySQLTableProperties.table_name.toString())) {
-                stringBuilder.append(objTableNode.opt(MySQLTableProperties.table_name.toString()));
+                stringBuilder.append(objTableNode.optString(MySQLTableProperties.table_name.toString()));
             }
 
-            if (objTableNode.has(MySQLTableProperties.key.toString())) {
-                stringBuilder.append("<div style=\"font-size:11px;font-weight:bold\">").append(objTableNode.opt(MySQLTableProperties.key.toString())).append("</div>");
-            }
+            /**
+             * @since 2016-12-31
+             * Add key node irrespective of its existence in JSON 
+             * to align the node.
+             */
+            stringBuilder.append("<div style=\"font-size:11px;font-weight:bold\">").append(objTableNode.optString(MySQLTableProperties.key.toString(), "<br/>")).append("</div>");
 
             if (messageFound) {
                 stringBuilder.append("<div style=\"font-size:11px;font-weight:bold\">Impossible WHERE noticed after reading const tables</div>");
@@ -321,7 +325,7 @@ public class MySQLAnalyzer implements Analyzer {
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_CONNECTOR_DOT).append("{border-radius:10px;-webkit-border-radius:10px;-moz-border-radius:10px;box-shadow:0 0 8px rgba(0, 0, 0, .8);-webkit-box-shadow:0 0 8px rgba(0, 0, 0, .8);-moz-box-shadow:0 0 8px rgba(0, 0, 0, .8);margin:0px auto;margin-bottom:99px;width:10px;height:10px;}\n");
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_NESTED_LOOP).append("{margin:0px auto;margin-bottom:77px;border:2px solid gray;width:50px;height:50px;text-align:center;}\n");
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_TABLE_BLOCK).append("{display:inline-block;text-align:center;margin-right:70px}\n");
-        stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_TABLE_BLOCK_DATA).append("{color:white;padding:5px;border:1px solid black;width:140px;height:15px;text-align:center;position:relative;}\n");
+        stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_TABLE_BLOCK_DATA).append("{color:white;padding:5px;border:1px solid black;/*width:140px*/;height:15px;text-align:center;position:relative;}\n");
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_GROUP_BY).append("{margin:0px auto;border:2px solid brown;padding:7px;margin-bottom:60px;width:50px;}\n");
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_ORDER_BY).append("{margin:0px auto;border:2px solid red;padding:7px;margin-bottom:60px;width:50px;}\n");
         stringBuilder.append("      ").append(".").append(Constants.CSS_MYSQL_QUERY_BLOCK).append("{margin:0px auto;border:1px solid black;padding:7px;margin-bottom:60px;width:70px;background-color:lightgray;}\n");

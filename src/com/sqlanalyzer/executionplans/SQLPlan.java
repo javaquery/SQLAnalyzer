@@ -5,14 +5,20 @@
  */
 package com.sqlanalyzer.executionplans;
 
-import java.util.List;
+import com.sqlanalyzer.io.SQLAnalyzerFile;
 import java.util.Map;
 
+/**
+ * List&lt;String&gt; reportFiles changed to SQLAnalyzerFile reportFile();
+ * @author vicky.thakor
+ * @since 2016-12-22
+ */
 public interface SQLPlan {
     public String getSQLPlan();
     public void setSQLPlan(String SQLPlan);
     public String getHTMLReport();
     public void setHTMLReport(String HTMLReport);
     public Map<String, Object> metaData();
-    public List<String> reportFiles();
+    public SQLAnalyzerFile getReportFile();
+    public void setReportFile(SQLAnalyzerFile file);
 }

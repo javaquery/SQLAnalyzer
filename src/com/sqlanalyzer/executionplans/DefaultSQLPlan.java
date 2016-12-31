@@ -5,9 +5,8 @@
  */
 package com.sqlanalyzer.executionplans;
 
-import java.util.ArrayList;
+import com.sqlanalyzer.io.SQLAnalyzerFile;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,8 +17,8 @@ public class DefaultSQLPlan implements SQLPlan{
     private String SQLPlan;
     private String HTMLReport;
     private final Map<String, Object> metaData = new HashMap<String, Object>(0);
-    private final List<String> reportFiles = new ArrayList<String>(0);
-
+    private SQLAnalyzerFile reportFile;
+    
     @Override
     public String getSQLPlan() {
         return this.SQLPlan;
@@ -46,7 +45,12 @@ public class DefaultSQLPlan implements SQLPlan{
     }
 
     @Override
-    public List<String> reportFiles() {
-        return reportFiles;
+    public SQLAnalyzerFile getReportFile() {
+        return this.reportFile;
+    }
+
+    @Override
+    public void setReportFile(SQLAnalyzerFile reportFile) {
+        this.reportFile = reportFile;
     }
 }

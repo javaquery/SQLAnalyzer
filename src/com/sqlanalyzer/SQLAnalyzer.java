@@ -13,6 +13,7 @@ import com.sqlanalyzer.database.service.PostgreSQLServiceImpl;
 import com.sqlanalyzer.exception.SQLAnalyzerException;
 import com.sqlanalyzer.executionplans.DefaultSQLPlan;
 import com.sqlanalyzer.executionplans.SQLPlan;
+import com.sqlanalyzer.io.SQLAnalyzerFile;
 import com.sqlanalyzer.util.CommonUtil;
 import com.sqlanalyzer.util.Constants;
 import com.sqlanalyzer.util.HTMLUtil;
@@ -178,7 +179,9 @@ public class SQLAnalyzer {
      * 
      * <b>Note: Report can be generated only when same query previously executed on that database.
      * In case of Analyzer can't find the execution plan. Execute same query multiple time so 
-     * database will cache the execution plan and then report can be generated.</b>
+     * database will cache the execution plan and then report can be generated.<br/>
+     * In order to save report you must call {@link SQLAnalyzer#save(java.lang.String, java.lang.String, java.lang.String)}
+     * </b>
      *
      * @author vicky.thakor
      * @return
@@ -188,20 +191,12 @@ public class SQLAnalyzer {
         List<SQLPlan> sqlPlans = new ArrayList<SQLPlan>(0);
         if (executionPlan != null && !executionPlan.trim().isEmpty()) {
             SQLPlan sqlPlan = new DefaultSQLPlan();
+            sqlPlan.setSQLPlan(executionPlan);
+            sqlPlans.add(sqlPlan);
+            
             /* Build HTML report from SQLPlan */
             String htmlReport = analyzer.parse(executionPlan);
-
-            /* Set generated report */
-            sqlPlan.setSQLPlan(executionPlan);
-            CommonUtil.putAllNullCheck(analyzer.metaData(), sqlPlan.metaData());
-            sqlPlan.setHTMLReport(prepareHTMLReport(htmlReport));
-
-            if (saveReport) {
-                String filename = prefix + suffix + ".html";
-                metaData = sqlPlan.metaData();
-                sqlPlan.reportFiles().add(saveHTMLReport(htmlReport, filename));
-            }
-            sqlPlans.add(sqlPlan);
+            processSQLPlans(sqlPlans, htmlReport);
         } else if (sqlQuery != null && !sqlQuery.trim().isEmpty()) {
             if (connection != null) {
                 sqlPlans = analyzer.getExecutionPlans(connection, sqlQuery);
@@ -209,16 +204,7 @@ public class SQLAnalyzer {
                     for (SQLPlan sqlPlan : sqlPlans) {
                         /* Build HTML report from SQLPlan */
                         String htmlReport = analyzer.parse(sqlPlan.getSQLPlan());
-
-                        /* Set generated report */
-                        CommonUtil.putAllNullCheck(analyzer.metaData(), sqlPlan.metaData());
-                        sqlPlan.setHTMLReport(prepareHTMLReport(htmlReport));
-
-                        if (saveReport) {
-                            String filename = prefix + suffix + ".html";
-                            metaData = sqlPlan.metaData();
-                            sqlPlan.reportFiles().add(saveHTMLReport(htmlReport, filename));
-                        }
+                        processSQLPlans(sqlPlans, htmlReport);
                     }
                 }
             } else {
@@ -230,6 +216,26 @@ public class SQLAnalyzer {
         return sqlPlans;
     }
 
+    /**
+     * @since 2016-12-31
+     * @param sqlPlans
+     * @param htmlReport 
+     */
+    private void processSQLPlans(List<SQLPlan> sqlPlans, String htmlReport){
+        if(sqlPlans != null){
+            for (SQLPlan sqlPlan : sqlPlans) {
+                CommonUtil.putAllNullCheck(analyzer.metaData(), sqlPlan.metaData());
+                sqlPlan.setHTMLReport(prepareHTMLReport(htmlReport));
+
+                if (saveReport) {
+                    String filename = prefix + suffix + ".html";
+                    metaData = sqlPlan.metaData();
+                    sqlPlan.setReportFile(saveHTMLReport(htmlReport, filename));
+                }
+            }
+        }
+    }
+    
     /**
      * Prepare functional HTML report
      *
@@ -259,7 +265,7 @@ public class SQLAnalyzer {
      * @param filename
      * @return
      */
-    private String saveHTMLReport(String htmlReport, String filename) {
+    private SQLAnalyzerFile saveHTMLReport(String htmlReport, String filename) {
         HTMLUtil.CSS_ICON_IMAGE = CommonUtil.value(configurator.iconImage(), DEFAULT_CONFIGURATOR.iconImage());
 
         StringBuilder stringBuilder = new StringBuilder();
