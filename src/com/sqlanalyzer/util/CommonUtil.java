@@ -8,6 +8,7 @@ package com.sqlanalyzer.util;
 import com.sqlanalyzer.Configurator;
 import com.sqlanalyzer.DefaultConfigurator;
 import com.sqlanalyzer.exception.SQLAnalyzerException;
+import com.sqlanalyzer.io.SQLAnalyzerFile;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -55,6 +56,9 @@ public class CommonUtil {
     }
 
     /**
+     * return type changed {@link String} to {@link SQLAnalyzerFile}
+     * @since 2016-12-31
+     * 
      * Save data to file.
      *
      * @param path
@@ -62,17 +66,17 @@ public class CommonUtil {
      * @param content
      * @return
      */
-    public static String saveFile(String path, String filename, String content) {
+    public static SQLAnalyzerFile saveFile(String path, String filename, String content) {
         path = path == null ? System.getProperty("user.home") : path;
         filename = filename == null ? UUID.randomUUID().toString() : filename;
 
-        File reportFolder = new File(path);
+        SQLAnalyzerFile reportFolder = new SQLAnalyzerFile(path);
         /* Create directories if not exist */
         if (!reportFolder.exists()) {
             reportFolder.mkdirs();
         }
 
-        File reportFile = new File(path + File.separatorChar + filename);
+        SQLAnalyzerFile reportFile = new SQLAnalyzerFile(path + File.separatorChar + filename);
         /* Delete existing report file */
         if (reportFile.exists()) {
             reportFile.delete();
@@ -84,7 +88,7 @@ public class CommonUtil {
             writer.close();
             String informationMessage = "SQLAnalyzer Report: \"" + reportFile.getAbsolutePath() + "\"";
             logger.info(informationMessage);
-            return reportFile.getAbsolutePath();
+            return reportFile;
         } catch (FileNotFoundException ex) {
             logger.log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {

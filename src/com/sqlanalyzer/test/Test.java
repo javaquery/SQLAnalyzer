@@ -35,7 +35,7 @@ public class Test {
 
         for (SQLPlan sqlPlan : sQLPlans) {
             System.out.println(sqlPlan.getHTMLReport());
-            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
+            Desktop.getDesktop().open(sqlPlan.getReportFile());
         }
 
         /* Using Execution Plan */
@@ -65,7 +65,7 @@ public class Test {
 
         for (SQLPlan sqlPlan : sQLPlans) {
             System.out.println(sqlPlan.getHTMLReport());
-            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
+            Desktop.getDesktop().open(sqlPlan.getReportFile());
         }
     }
 
@@ -78,7 +78,7 @@ public class Test {
 
         for (SQLPlan sqlPlan : sQLPlans) {
             System.out.println(sqlPlan.getHTMLReport());
-            Desktop.getDesktop().open(new File(sqlPlan.reportFiles().get(0)));
+            Desktop.getDesktop().open(sqlPlan.getReportFile());
         }
     }
 
