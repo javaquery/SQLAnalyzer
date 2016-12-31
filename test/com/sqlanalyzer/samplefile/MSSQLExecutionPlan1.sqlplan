@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-16"?>
+<ShowPlanXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.1" Build="10.50.1600.1" xmlns="http://schemas.microsoft.com/sqlserver/2004/07/showplan">
+  <BatchSequence>
+    <Batch>
+      <Statements>
+        <StmtSimple StatementCompId="1" StatementEstRows="97454.1" StatementId="1" StatementOptmLevel="FULL" StatementSubTreeCost="1.78961" StatementText="SELECT * FROM Sales.SalesOrderDetail s&#xD;&#xA;INNER JOIN Production.Product p ON s.ProductID = p.ProductID" StatementType="SELECT" QueryHash="0x96701B7EBE376B2F" QueryPlanHash="0x57C491E60768D0E0">
+          <StatementSetOptions ANSI_NULLS="true" ANSI_PADDING="true" ANSI_WARNINGS="true" ARITHABORT="true" CONCAT_NULL_YIELDS_NULL="true" NUMERIC_ROUNDABORT="false" QUOTED_IDENTIFIER="true" />
+          <QueryPlan DegreeOfParallelism="0" MemoryGrant="1912" CachedPlanSize="64" CompileTime="14" CompileCPU="14" CompileMemory="360">
+            <RelOp AvgRowSize="332" EstimateCPU="0.702558" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="97454.1" LogicalOp="Inner Join" NodeId="0" Parallel="false" PhysicalOp="Hash Match" EstimatedTotalSubtreeCost="1.78961">
+              <OutputList>
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderDetailID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="CarrierTrackingNumber" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SpecialOfferID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="rowguid" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ModifiedDate" />
+                <ColumnReference Table="[s]" Column="LineTotal" ComputedColumn="true" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Name" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductNumber" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="MakeFlag" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="FinishedGoodsFlag" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Color" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SafetyStockLevel" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ReorderPoint" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="StandardCost" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ListPrice" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Size" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SizeUnitMeasureCode" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="WeightUnitMeasureCode" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Weight" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DaysToManufacture" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductLine" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Class" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Style" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductSubcategoryID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductModelID" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellStartDate" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellEndDate" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DiscontinuedDate" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="rowguid" />
+                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ModifiedDate" />
+              </OutputList>
+              <MemoryFractions Input="1" Output="1" />
+              <RunTimeInformation>
+                <RunTimeCountersPerThread Thread="0" ActualRows="121317" ActualEndOfScans="1" ActualExecutions="1" />
+              </RunTimeInformation>
+              <Hash>
+                <DefinedValues />
+                <HashKeysBuild>
+                  <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductID" />
+                </HashKeysBuild>
+                <HashKeysProbe>
+                  <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                </HashKeysProbe>
+                <RelOp AvgRowSize="229" EstimateCPU="0.0007114" EstimateIO="0.0120139" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="504" LogicalOp="Clustered Index Scan" NodeId="1" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="0.0127253" TableCardinality="504">
+                  <OutputList>
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Name" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductNumber" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="MakeFlag" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="FinishedGoodsFlag" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Color" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SafetyStockLevel" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ReorderPoint" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="StandardCost" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ListPrice" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Size" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SizeUnitMeasureCode" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="WeightUnitMeasureCode" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Weight" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DaysToManufacture" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductLine" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Class" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Style" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductSubcategoryID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductModelID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellStartDate" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellEndDate" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DiscontinuedDate" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="rowguid" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ModifiedDate" />
+                  </OutputList>
+                  <RunTimeInformation>
+                    <RunTimeCountersPerThread Thread="0" ActualRows="504" ActualEndOfScans="1" ActualExecutions="1" />
+                  </RunTimeInformation>
+                  <IndexScan Ordered="false" ForcedIndex="false" NoExpandHint="false">
+                    <DefinedValues>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductID" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Name" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductNumber" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="MakeFlag" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="FinishedGoodsFlag" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Color" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SafetyStockLevel" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ReorderPoint" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="StandardCost" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ListPrice" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Size" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SizeUnitMeasureCode" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="WeightUnitMeasureCode" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Weight" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DaysToManufacture" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductLine" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Class" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="Style" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductSubcategoryID" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ProductModelID" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellStartDate" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="SellEndDate" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="DiscontinuedDate" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="rowguid" />
+                      </DefinedValue>
+                      <DefinedValue>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Alias="[p]" Column="ModifiedDate" />
+                      </DefinedValue>
+                    </DefinedValues>
+                    <Object Database="[AdventureWorks2008R2]" Schema="[Production]" Table="[Product]" Index="[PK_Product_ProductID]" Alias="[p]" IndexKind="Clustered" />
+                  </IndexScan>
+                </RelOp>
+                <RelOp AvgRowSize="112" EstimateCPU="0.0121317" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="121317" LogicalOp="Compute Scalar" NodeId="2" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="1.07433">
+                  <OutputList>
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderDetailID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="CarrierTrackingNumber" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SpecialOfferID" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="rowguid" />
+                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ModifiedDate" />
+                    <ColumnReference Table="[s]" Column="LineTotal" ComputedColumn="true" />
+                  </OutputList>
+                  <ComputeScalar>
+                    <DefinedValues>
+                      <DefinedValue>
+                        <ColumnReference Table="[s]" Column="LineTotal" ComputedColumn="true" />
+                        <ScalarOperator ScalarString="[AdventureWorks2008R2].[Sales].[SalesOrderDetail].[LineTotal] as [s].[LineTotal]">
+                          <Identifier>
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="LineTotal" ComputedColumn="true" />
+                          </Identifier>
+                        </ScalarOperator>
+                      </DefinedValue>
+                    </DefinedValues>
+                    <RelOp AvgRowSize="112" EstimateCPU="0.0121317" EstimateIO="0" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="121317" LogicalOp="Compute Scalar" NodeId="3" Parallel="false" PhysicalOp="Compute Scalar" EstimatedTotalSubtreeCost="1.0622">
+                      <OutputList>
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderID" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderDetailID" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="CarrierTrackingNumber" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SpecialOfferID" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="LineTotal" ComputedColumn="true" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="rowguid" />
+                        <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ModifiedDate" />
+                      </OutputList>
+                      <ComputeScalar>
+                        <DefinedValues>
+                          <DefinedValue>
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="LineTotal" ComputedColumn="true" />
+                            <ScalarOperator ScalarString="isnull((CONVERT_IMPLICIT(numeric(19,4),[AdventureWorks2008R2].[Sales].[SalesOrderDetail].[UnitPrice] as [s].[UnitPrice],0)*((1.0)-CONVERT_IMPLICIT(numeric(19,4),[AdventureWorks2008R2].[Sales].[SalesOrderDetail].[UnitPriceDiscount] as [s].[UnitPriceDiscount],0)))*CONVERT_IMPLICIT(numeric(5,0),[AdventureWorks2008R2].[Sales].[SalesOrderDetail].[OrderQty] as [s].[OrderQty],0),(0.000000))">
+                              <Intrinsic FunctionName="isnull">
+                                <ScalarOperator>
+                                  <Arithmetic Operation="MULT">
+                                    <ScalarOperator>
+                                      <Arithmetic Operation="MULT">
+                                        <ScalarOperator>
+                                          <Convert DataType="numeric" Precision="19" Scale="4" Style="0" Implicit="true">
+                                            <ScalarOperator>
+                                              <Identifier>
+                                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                                              </Identifier>
+                                            </ScalarOperator>
+                                          </Convert>
+                                        </ScalarOperator>
+                                        <ScalarOperator>
+                                          <Arithmetic Operation="SUB">
+                                            <ScalarOperator>
+                                              <Const ConstValue="(1.0)" />
+                                            </ScalarOperator>
+                                            <ScalarOperator>
+                                              <Convert DataType="numeric" Precision="19" Scale="4" Style="0" Implicit="true">
+                                                <ScalarOperator>
+                                                  <Identifier>
+                                                    <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                                                  </Identifier>
+                                                </ScalarOperator>
+                                              </Convert>
+                                            </ScalarOperator>
+                                          </Arithmetic>
+                                        </ScalarOperator>
+                                      </Arithmetic>
+                                    </ScalarOperator>
+                                    <ScalarOperator>
+                                      <Convert DataType="numeric" Precision="5" Scale="0" Style="0" Implicit="true">
+                                        <ScalarOperator>
+                                          <Identifier>
+                                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                                          </Identifier>
+                                        </ScalarOperator>
+                                      </Convert>
+                                    </ScalarOperator>
+                                  </Arithmetic>
+                                </ScalarOperator>
+                                <ScalarOperator>
+                                  <Const ConstValue="(0.000000)" />
+                                </ScalarOperator>
+                              </Intrinsic>
+                            </ScalarOperator>
+                          </DefinedValue>
+                        </DefinedValues>
+                        <RelOp AvgRowSize="95" EstimateCPU="0.133606" EstimateIO="0.916458" EstimateRebinds="0" EstimateRewinds="0" EstimateRows="121317" LogicalOp="Clustered Index Scan" NodeId="4" Parallel="false" PhysicalOp="Clustered Index Scan" EstimatedTotalSubtreeCost="1.05006" TableCardinality="121317">
+                          <OutputList>
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderID" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderDetailID" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="CarrierTrackingNumber" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SpecialOfferID" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="rowguid" />
+                            <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ModifiedDate" />
+                          </OutputList>
+                          <RunTimeInformation>
+                            <RunTimeCountersPerThread Thread="0" ActualRows="121317" ActualEndOfScans="1" ActualExecutions="1" />
+                          </RunTimeInformation>
+                          <IndexScan Ordered="false" ForcedIndex="false" NoExpandHint="false">
+                            <DefinedValues>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderID" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SalesOrderDetailID" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="CarrierTrackingNumber" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="OrderQty" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ProductID" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="SpecialOfferID" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPrice" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="UnitPriceDiscount" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="rowguid" />
+                              </DefinedValue>
+                              <DefinedValue>
+                                <ColumnReference Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Alias="[s]" Column="ModifiedDate" />
+                              </DefinedValue>
+                            </DefinedValues>
+                            <Object Database="[AdventureWorks2008R2]" Schema="[Sales]" Table="[SalesOrderDetail]" Index="[PK_SalesOrderDetail_SalesOrderID_SalesOrderDetailID]" Alias="[s]" IndexKind="Clustered" />
+                          </IndexScan>
+                        </RelOp>
+                      </ComputeScalar>
+                    </RelOp>
+                  </ComputeScalar>
+                </RelOp>
+              </Hash>
+            </RelOp>
+          </QueryPlan>
+        </StmtSimple>
+      </Statements>
+    </Batch>
+  </BatchSequence>
+</ShowPlanXML>
